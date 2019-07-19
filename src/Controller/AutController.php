@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
 
 class AutController extends AppController {
   /**
@@ -16,13 +17,14 @@ class AutController extends AppController {
     }
 
 /** 
-     * Metodo para mostrar la pagina de inicio.
-*/    
-    
-//--logs
-
+     * Metodo para mostrar la pagina de autenticación.
+     * @author Efrén Pérez
+*/   
 public function login()
 {
+    if($this->request->session()->check('Auth.User.usuario_id')){
+        return $this->redirect(['controller'=> 'home','action'=>'index',NIVEL_EDUCATIVO_SECUNDARIA]);
+    }
     if ($this->request->is('post')) {
         $user = $this->Auth->identify();
         if ($user) {
@@ -34,8 +36,14 @@ public function login()
     $this->layout = false;
 }
 
+/** 
+     * Metodo para cierre de sesión.
+     * 
+     * @author Efrén Pérez
+*/  
 public function logout()
 {
+
     return $this->redirect($this->Auth->logout());
 }
 

@@ -20,6 +20,21 @@ class UsuarioTable extends AppTable{
         'foreignKey' => 'usuario_id',
     ]);
   }
+  /* Metodo que encuentra la información de usuario en la base.
+     * @param $query
+     * @author Efrén Pérez
+     */
+  public function findAuth(\Cake\ORM\Query $query, array $options){
+    $query
+      ->select(['usuario_id',
+                'usuario_nombre',
+                'usuario_ap_pat',
+                'usuario_ap_mat',
+                'usuario_edad',
+                'usuario_correo',
+                'usuario_password']);
+      return $query;
+  }
 
 
 }

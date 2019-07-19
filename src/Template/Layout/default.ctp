@@ -63,7 +63,7 @@
         </li>
         <li>
           <?= $this->Html->link('<i class="fa fa-sign-out"></i><span>Cerrar Sesión</span>',
-          [],['escape' => false]); ?>
+          ['controller' => 'Aut','action' => 'logout'],['escape' => false]); ?>
         </li>
       </ul>
     </section>

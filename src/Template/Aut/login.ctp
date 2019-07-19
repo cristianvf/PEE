@@ -9,16 +9,16 @@
   <div class="card"></div>
   <div class="card">
     <h1 class="title">Inicio de sesión</h1>
-    <?= $this->Form->create() ?>
+    <?= $this->Form->create(null,['url' => ['controller' => 'Aut', 'action' => 'login'],'type'=> 'post']) ?>
 
       <div class="input-container">
-        <input type="#{type}" id="#{label}" name="usuario_correo" required="required"/>
-        <label for="#{label}">Correo Electrónico</label>
+        <input type="text" id="usuario_correo" name="usuario_correo" required="required"/>
+        <label for="usuario_correo">Correo Electrónico</label>
         <div class="bar"></div>
       </div>
       <div class="input-container">
-        <input type="#{type}" id="#{label}" name="usuario_password" required="required"/>
-        <label for="#{label}">Contraseña</label>
+        <input type="password" id="usuario_password" name="usuario_password" required="required"/>
+        <label for="usuario_password">Contraseña</label>
         <div class="bar"></div>
       </div>
       <div class="button-container">

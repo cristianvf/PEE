@@ -4,39 +4,57 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Network\Exception\InvalidCsrfTokenException;
+use App\Controller\Security;
 
 
 /* Controlador que contiene funciones generales
  *
  * @author Cristian Vargas
+ * @author Efrén Pérez
  */
 
 class AppController extends Controller
 {
 
   /* Método para cargar configuración.
-   *
+   *Autenticación y redireccionamiento .
+   *login/logout.
    * @author Cristian Vargas
+   * @author Efrén Pérez
    */
     public function initialize()
     {
         parent::initialize();
 
-
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Csrf');
-        $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
-            'loginRedirect' => [
+            'authenticate' => [
+                'Form' => [
+                    'finder' => 'auth',
+                    'userModel' => 'Usuario',
+                    'fields' => [
+                        'username' => 'usuario_correo',
+                        'password' => 'usuario_password'
+                    ],
+                ],
+            ],
+            'loginAction' => [
                 'controller' => 'Aut',
-                'action' => 'index'
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'controller' => 'Home',
+                'action' => 'index',NIVEL_EDUCATIVO_SECUNDARIA
             ],
             'logoutRedirect' => [
                 'controller' => 'Aut', 
                 'action' => 'login',
-                'home'
-            ]
+            ],
+            'authError' => FALSE,
         ]);
+
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Csrf');
+        $this->loadComponent('Flash');
     }
 
     /* Metodo que se ejecuta antes de cargar el controlador.
@@ -81,6 +99,10 @@ class AppController extends Controller
             return $this->redirect($redirectUrl);
         }
     }
+    /*Método para indicar que no necesita loggin para la vista
+     * @param array $event 
+     * @author Efrén Pérez
+     */
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow(['login']);
