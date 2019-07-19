@@ -201,3 +201,9 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+/*
+  Archivos de constantes y mensajes
+*/
+require_once("constantes.php");
+require_once("mensajes.php");
