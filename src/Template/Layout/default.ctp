@@ -6,13 +6,25 @@
   <title>Portafolio de evidencias educativa</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <?= $this->Html->css(['bootstrap.min.css','font-awesome.min.css','ionicons.min.css','AdminLTE.min.css','skin-blue.min.css']); ?>
+  <?= $this->Html->css(['dependencias/bootstrap.min.css','dependencias/font-awesome.min.css','dependencias/ionicons.min.css',
+  'dependencias/AdminLTE.min.css','dependencias/skin-blue.min.css','pee.css','dependencias/pnotify.custom.min.css']); ?>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
- <?= $this->Html->script(['jquery.min.js','bootstrap.min.js','adminlte.min.js']); ?>
+ <?= $this->Html->script(['dependencias/jquery.min.js','dependencias/bootstrap.min.js','dependencias/adminlte.min.js','dependencias/pnotify.custom.min.js']); ?>
   <?= $this->fetch('meta') ?>
   <?= $this->fetch('css') ?>
   <?= $this->fetch('script') ?>
+
+  <script>
+    var NIVEL_EDUCATIVO_SECUNDARIA = <?= NIVEL_EDUCATIVO_SECUNDARIA ?>;
+    var NIVEL_EDUCATIVO_BACHILLERATO = <?= NIVEL_EDUCATIVO_BACHILLERATO ?>;
+    var NIVEL_EDUCATIVO_UNIVERSIDAD = <?= NIVEL_EDUCATIVO_UNIVERSIDAD ?>;
+    var NOTIFY_SUCCESS = '<?= NOTIFY_SUCCESS ?>';
+    var NOTIFY_ERROR = '<?= NOTIFY_ERROR ?>';
+    var TITLE_NOTIFY_SUCCESS = '<?= TITLE_NOTIFY_SUCCESS ?>';
+    var TITLE_NOTIFY_ERROR = '<?= TITLE_NOTIFY_ERROR ?>';
+    var MSG_ERROR_DEFAULT = '<?= MSG_ERROR_DEFAULT ?>';
+  </script>
 
 </head>
 
@@ -37,18 +49,21 @@
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU</li>
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
+        <li class="menu-sec active">
+          <?= $this->Html->link('<i class="fa fa-book"></i><span>Secundaria</span>',
+          ['controller' => 'Home', 'action'=>'index',NIVEL_EDUCATIVO_SECUNDARIA],['escape' => false]); ?>
+        </li>
+        <li class="menu-bach">
+          <?= $this->Html->link('<i class="fa fa-graduation-cap"></i><span>Bachillerato</span>',
+          ['controller' => 'Home', 'action'=>'index',NIVEL_EDUCATIVO_BACHILLERATO],['escape' => false]); ?>
+        </li>
+        <li class="menu-uni">
+          <?= $this->Html->link('<i class="fa fa-university"></i><span>Universidad</span>',
+          ['controller' => 'Home', 'action'=>'index',NIVEL_EDUCATIVO_UNIVERSIDAD],['escape' => false]); ?>
+        </li>
+        <li>
+          <?= $this->Html->link('<i class="fa fa-sign-out"></i><span>Cerrar Sesión</span>',
+          [],['escape' => false]); ?>
         </li>
       </ul>
     </section>
@@ -72,8 +87,10 @@
 
 
   <div class="control-sidebar-bg"></div>
-</div>
+  </div>
+  <?= $this->Html->script(['funciones/funciones.js']); ?>
 
+  </script>
 
 </body>
 </html>
