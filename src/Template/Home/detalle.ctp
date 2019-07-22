@@ -8,7 +8,7 @@
     <div class="col-md-6 margin-bottom-15">
         <?=  $this->Form->label('fecha', 'Fecha de emisión'); ?>
         <div class="detalle">
-            <?= (isset($datos[0]['fecha']) && !empty($datos[0]['fecha'])) ? $datos[0]['fecha'] : SIN_INFORMACION;?>
+            <?= (isset($datos[0]['fecha']) && !empty($datos[0]['fecha'])) ? $datos[0]['fecha']->format("d/m/Y") : SIN_INFORMACION;?>
         </div>
     </div>
 </div>

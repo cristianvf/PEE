@@ -88,10 +88,10 @@ echo $this->Form->create(null, [
         <div class="archivoSubido">
         <?php
         if(!empty($datos['actividad_nombre_archivo'])){
-           echo $this->Form->hidden('actividad_nombre_archivo',[
-                   'id'=>'actividad_nombre_archivo',
+           echo $this->Form->hidden('archivo_oculto',[
+                   'id'=>'archivo_oculto',
                    'value'=>$datos['actividad_nombre_archivo'],
-                   'data-id' => 'actividad_nombre_archivo',
+                   'data-id' => 'archivo_oculto',
                    'class' => 'archivoActividadOculto']);
 
            echo $datos['actividad_nombre_archivo'].'&nbsp;&nbsp;&nbsp<br>';
@@ -126,7 +126,7 @@ echo $this->Form->create(null, [
         'id' => 'comentario',
         'class' => 'form-control no-resizable',
         'required'=> false,
-        'value' => (isset($datos['url']) && !empty($datos['url'])) ? $datos['url'] : '',
+        'value' => (isset($datos['comentario']) && !empty($datos['comentario'])) ? $datos['comentario'] : '',
         'type' => 'textarea'
     ]);
     ?>

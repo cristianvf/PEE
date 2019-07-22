@@ -87,30 +87,41 @@ class ActividadTable extends AppTable{
   public function guardar($datos,$usuarioId){
     $actividad = $this->newEntity();
     $archivo = [];
+    $edicion = false;
     $datos['actividad_estado'] = ESTADO_ACTIVO;
     if (isset($datos['actividad_id']) && !empty($datos['actividad_id'])) {
+      $edicion = true;
       $actividad = $this->get($datos['actividad_id']);
     }
-    if ($datos['actividad_nombre_archivo']['size'] > SIN_ARCHIVO) {
-      $archivo = $datos['actividad_nombre_archivo'];
-      unset($datos['actividad_nombre_archivo']);
-      $datos['actividad_nombre_archivo'] = $this->limpiarNombre($archivo['name']);
-    }else{
-      unset($datos['actividad_nombre_archivo']);
+    if (isset($datos['actividad_nombre_archivo']) && !empty($datos['actividad_nombre_archivo'])) {
+      if ($datos['actividad_nombre_archivo']['size'] > SIN_ARCHIVO ) {
+        $archivo = $datos['actividad_nombre_archivo'];
+        unset($datos['actividad_nombre_archivo']);
+        $datos['actividad_nombre_archivo'] = $this->limpiarNombre($archivo['name']);
+      }
     }
+
+    if (isset($datos['archivo_oculto']) && !empty(isset($datos['archivo_oculto']))) {
+        $datos['actividad_nombre_archivo'] = $datos['archivo_oculto'];
+        unset($datos['archivo_oculto']);
+    }
+
     if (isset($datos['fecha']) && !empty($datos['fecha'])) {
        $datos['fecha'] = $this->getDateFormated($datos['fecha']);
     }
     $idNivelEducativoId = $datos['niv_edu_id'];
     unset($datos['niv_edu_id']);
     $actividad = $this->patchEntity($actividad, $datos);
+
     $response['estatus'] = $this->connection()->transactional(
-      function() use ($actividad, $usuarioId,$archivo,$idNivelEducativoId) {
+      function() use ($actividad, $usuarioId,$archivo,$idNivelEducativoId,$edicion) {
           if (!$this->save($actividad)) {
               return false;
           }
-          $this->ActividadUsuario->guardar($actividad->actividad_id, $usuarioId, $idNivelEducativoId);
-          if ($archivo['size'] > SIN_ARCHIVO) {
+          if (!$edicion) {
+              $this->ActividadUsuario->guardar($actividad->actividad_id, $usuarioId, $idNivelEducativoId);
+          }
+          if (isset($archivo) && !empty($archivo)) {
             $this->__guardarArchivo($archivo,$usuarioId,$actividad->actividad_id);
           }
           return true;
