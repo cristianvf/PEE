@@ -1,4 +1,5 @@
 <?php
+echo $this->Html->css(["dependencias/jquery-ui.min.css"]);
 echo $this->Form->create(null, [
         'type' => 'post',
         'id' => 'formGuardarActividad',
@@ -10,6 +11,7 @@ echo $this->Form->create(null, [
     if (isset($datos['actividad_id'])&& !empty($datos['actividad_id'])){
          echo $this->Form->hidden('actividad_id',['id' => 'actividad_id', 'value' => $datos['actividad_id']]);
     }
+    echo $this->Form->hidden('niv_edu_id',['id' => 'niv_edu_id', 'value' => $idNivelEducativoId]);
 ?>
 
 <div class="row">
@@ -17,7 +19,7 @@ echo $this->Form->create(null, [
         <?php
             echo $this->Form->control('actividad_nombre',[
                 'label' => [
-                     'class' => 'control-label obligatorio',
+                     'class' => 'control-label',
                      'text' => 'Nombre del curso'
                  ],
                 'id' => 'actividad_nombre',
@@ -30,12 +32,12 @@ echo $this->Form->create(null, [
             <?php
                 echo $this->Form->control('fecha',[
                     'label' => [
-                         'class' => 'control-label obligatorio',
+                         'class' => 'control-label',
                          'text' => 'Fecha de emisión'
                      ],
                     'id' => 'fecha',
                     'class' => 'form-control',
-                    'value' =>  (isset($datos['fecha']) && !empty($datos['fecha'])) ? $datos['fecha'] : '',
+                    'value' =>  (isset($datos['fecha']) && !empty($datos['fecha'])) ? $datos['fecha']->format('d/m/Y') : '',
                 ]);
             ?>
     </div>
@@ -46,7 +48,7 @@ echo $this->Form->create(null, [
         <?php
             echo $this->Form->control('escuela_emision',[
                 'label' => [
-                     'class' => 'control-label obligatorio',
+                     'class' => 'control-label',
                      'text' => 'Escuela de emisión'
                  ],
                 'id' => 'escuela_emision',
@@ -59,7 +61,7 @@ echo $this->Form->create(null, [
             <?php
                 echo $this->Form->control('url',[
                     'label' => [
-                         'class' => 'control-label obligatorio',
+                         'class' => 'control-label',
                          'text' => 'URL'
                      ],
                     'id' => 'url',
@@ -96,7 +98,7 @@ echo $this->Form->create(null, [
 
            echo $this->Html->link(
               '<span class="fa fa-arrow-down fa-fw"></span>',
-               ['controller' => 'Home','action' => 'descargarArchivo',1,8,$datos['actividad_nombre_archivo']],
+               ['controller' => 'Home','action' => 'descargarArchivo',$usuarioId,$datos['actividad_id'],$datos['actividad_nombre_archivo']],
                ['class' => 'btn btn-primary btn-xs margin-right-5', 'escape' => false, 'title' => 'Descargar archivo.', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom',]
            );
 
@@ -132,5 +134,5 @@ echo $this->Form->create(null, [
 </div>
 <?= $this->Form->end(); ?>
 
-<?= $this->Html->script(['home/editar',"funciones/funciones.js"],['block' => 'scriptBottom']); ?>
+<?= $this->Html->script(['home/editar',"funciones/funciones.js","dependencias/jquery-ui.min.js"],['block' => 'scriptBottom']); ?>
 <?= $this->fetch('scriptBottom') ?>

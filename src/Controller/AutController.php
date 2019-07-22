@@ -16,10 +16,10 @@ class AutController extends AppController {
         parent::initialize();
     }
 
-/** 
+/**
      * Metodo para mostrar la pagina de autenticación.
      * @author Efrén Pérez
-*/   
+*/
 public function login()
 {
     if($this->request->session()->check('Auth.User.usuario_id')){
@@ -31,16 +31,16 @@ public function login()
             $this->Auth->setUser($user);
             return $this->redirect($this->Auth->redirectUrl());
         }
-        $this->Flash->error(__('Correo electrónico o constraseña incorrecto'));
+        //$this->Flash->error(__('Correo electrónico o constraseña incorrecto'));
     }
     $this->layout = false;
 }
 
-/** 
+/**
      * Metodo para cierre de sesión.
-     * 
+     *
      * @author Efrén Pérez
-*/  
+*/
 public function logout()
 {
 

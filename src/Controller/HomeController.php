@@ -10,6 +10,7 @@ class HomeController extends AppController {
       $this->loadModel('Usuario');
       $this->loadModel('NivelEducativo');
       $this->loadModel('Actividad');
+      $this->loadComponent('Paginator');
 
     }
 
@@ -55,10 +56,10 @@ class HomeController extends AppController {
      */
     public function listar(){
       $idNivelEducativoId = $this->request->data;
-      $usuarioId = 1;
+      $usuarioId = $this->request->session()->read('Auth.User.usuario_id');
       $listadoActividades = $this->Actividad->getListadoActividades($idNivelEducativoId, $usuarioId);
       $countListado = count($listadoActividades);
-      $this->set(compact('listadoActividades','countListado'));
+      $this->set(compact('listadoActividades','countListado','idNivelEducativoId'));
       $this->render("listar", "ajax");
     }
 
@@ -68,14 +69,15 @@ class HomeController extends AppController {
      * @param int $id identificador de la actividad
      * @author Cristian Vargas
      */
-    public function editar($id = null){
+    public function editar($idNivelEducativoId = null, $id = null){
       $datos = [];
       $this->viewBuilder()->layout('ajax');
+      $usuarioId = $this->request->session()->read('Auth.User.usuario_id');
       if(isset($id) && !empty($id)){
         $datos = $this->Actividad->getActividad($id);
         $datos = $datos[0];
       }
-      $this->set(compact('datos'));
+      $this->set(compact('datos','usuarioId','idNivelEducativoId'));
     }
 
     /*
@@ -86,7 +88,8 @@ class HomeController extends AppController {
     public function guardar(){
       $this->viewBuilder()->className('Json');
       $datos = $this->request->data;
-      $response = $this->Actividad->guardar($datos,1);
+      $usuarioId = $this->request->session()->read('Auth.User.usuario_id');
+      $response = $this->Actividad->guardar($datos,$usuarioId);
       $this->set(compact('response'));
     }
 
@@ -98,8 +101,9 @@ class HomeController extends AppController {
      */
     public function detalle($id = null){
       $this->viewBuilder()->layout('ajax');
+      $usuarioId = $this->request->session()->read('Auth.User.usuario_id');
       $datos = $this->Actividad->getActividad($id);
-      $this->set(compact('datos'));
+      $this->set(compact('datos','usuarioId'));
 
     }
 

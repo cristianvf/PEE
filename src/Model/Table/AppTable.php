@@ -77,4 +77,15 @@ class AppTable extends Table{
             }
         }
     }
+
+    /**
+     *
+     * Metodo para darle formato a la fecha.
+     *
+     * @param type string $fecha Fecha ingresada
+     * @author Cristian Vargas
+     */
+    public function getDateFormated($fecha = ''){
+     return date("Y-m-d", strtotime(str_replace('/', '-', $fecha)));
+    }
 }

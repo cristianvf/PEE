@@ -1,6 +1,7 @@
 $( document ).ready(function() {
   cambiarPestanaMenu(idNivelEducativo)
   listar(urlListarActividad,"#listado-actividades",idNivelEducativo);
+  ajaxPagination('#listado-actividades');
   $('#modalEditarActividad').on('hidden.bs.modal', function (){
        $('#modalEditarActividad .modalEnviar').off('click');
     });
@@ -24,16 +25,16 @@ function cambiarPestanaMenu(idNivelEducativo){
 }
 }
 
-function modalRegistrarActividad(){
-  cargarModal(urlEditarActividad,'#modalEditarActividad','Registrar actividad','Guardar',false);
+function modalRegistrarActividad(idNivelEducativo){
+  cargarModal(urlEditarActividad + '/' + idNivelEducativo  ,'#modalEditarActividad','Registrar actividad','Guardar',false);
 }
 
 function modalDetalleActividad(id){
   cargarModal(urlDetalleActividad+"/"+id,'#modalDetalleActividad','Detalle de actividad','',true);
 }
 
-function modalEditarActividad(id){
-  cargarModal(urlEditarActividad+"/"+id,'#modalEditarActividad','Editar actividad','Guardar',false);
+function modalEditarActividad(idNivelEducativo,id){
+  cargarModal(urlEditarActividad+ "/" + idNivelEducativo +"/"+id,'#modalEditarActividad','Editar actividad','Guardar',false);
 
 }
 
@@ -68,7 +69,7 @@ function cambiarEstadoActividad(id){
           var modal = $('#modalEliminarActividad');
           PNotify.removeAll();
           if(data.response.estatus){
-              listar(urlListarActividad,"#listado-actividades");
+              listar(urlListarActividad,"#listado-actividades",idNivelEducativo);
               pNotify(TITLE_NOTIFY_SUCCESS, 'Se ha eliminado la actividad de forma correcta', NOTIFY_SUCCESS);
           }else{
               pNotify(TITLE_NOTIFY_ERROR, MSG_ERROR_DEFAULT, NOTIFY_ERROR);

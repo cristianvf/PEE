@@ -37,8 +37,8 @@
                echo $this->Html->link(
                        '<span class="fa fa-arrow-down fa-fw bloqueo"></span>',
                         ['controller' => 'Home','action' => 'descargarArchivo',
-                            1,
-                            8,
+                            $usuarioId,
+                            $datos[0]['actividad_id'],
                             $datos[0]['actividad_nombre_archivo'],
                             ],
                         ['class' => 'btn btn-primary btn-xs margin-right-5 margin-left-5 tooltip-disabled', 'escape' => false, 'data-placement' => 'bottom', 'data-toggle' => 'tooltip', 'title' => 'Descargar archivo']);

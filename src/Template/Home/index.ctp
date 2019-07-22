@@ -21,7 +21,7 @@
           echo $this->Form->button('Registrar actividad', ['escape' => false,
              'class' => 'btn btn-md btn-success btn-right',
              'id' => 'btnRegistrarActividad',
-             'onclick' => 'modalRegistrarActividad();',
+             'onclick' => 'modalRegistrarActividad('.$idNivelEducativo.');',
              'type' => 'button']);
 
        ?>

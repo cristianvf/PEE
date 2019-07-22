@@ -59,3 +59,14 @@ function pNotify(title, message, type) {
         return;
 });
 }
+
+function ajaxPagination(idListado){
+    $(idListado).on('click','.ajax-pagination a', function(event) {
+        event.preventDefault();
+        var pageUrl = $(this).attr('href');
+        console.log(pageUrl);
+        if(!pageUrl)
+        return false;
+        listar(pageUrl, idListado);
+    });
+}

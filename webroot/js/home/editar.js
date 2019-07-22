@@ -1,5 +1,11 @@
 $( document ).ready(function() {
 
+  var datePickerInput = $("#fecha").datepicker({
+    dateFormat : "yy-mm-dd",
+    changeMonth : true,
+    changeYear : true
+  });
+
   $("#modalEditarActividad .modalEnviar").on('click',function(){
     guardarActividad();
   });

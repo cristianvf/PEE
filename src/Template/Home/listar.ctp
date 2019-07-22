@@ -2,7 +2,7 @@
   <div class="table-responsive margin-top-5">
         <table class="table table-striped table-hover table-bordered">
             <thead>
-                <tr class="ajax-pagination icono-titulo">
+                <tr>
                     <th style="min-width: 160px">Acciones</th>
                     <th style="width:40%"><?= $this->Paginator->sort('actividad_nombre', 'Nombre del curso'); ?></th>
                     <th style="width:10%"><?= $this->Paginator->sort('fecha', 'Fecha de emisión'); ?></th>
@@ -14,7 +14,7 @@
                     <tr>
                         <td class="text-center">
                           <?php
-                          $btn['editar']['onclick'] = 'modalEditarActividad('.$dato['actividad_id'].');';
+                          $btn['editar']['onclick'] = 'modalEditarActividad('.$idNivelEducativoId['niv_edu_id'].','.$dato['actividad_id'].');';
                           $btn['editar']['title'] = "Para editar los datos de la actividad, haga clic aquí.";
                           $btn['detalle']['onclick'] = 'modalDetalleActividad('.$dato['actividad_id'].');';
                           $btn['detalle']['title'] = "Para ver el detalle de la actividad, haga clic aquí.";
@@ -44,7 +44,7 @@
                             ?>
                         </td>
                         <td><?= h($dato["actividad_nombre"]) ?></td>
-                        <td><?= h($dato["fecha"]) ?> </td>
+                        <td><?= ($dato["fecha"])->format('d/m/Y') ?> </td>
                         <td><?= h($dato["escuela_emision"]) ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -73,9 +73,6 @@
             </ul>
         </div>
     </div>
-
-
-
 
 <?php } else{
   echo '<div class="row margin-top-20">';

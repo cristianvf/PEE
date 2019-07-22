@@ -50,7 +50,8 @@ class ActividadTable extends AppTable{
                 ])
                 ->where([
                   'ActividadUsuario.usuario_id' => $usuarioId,
-                  'ActividadUsuario.niv_edu_id' => $idNivelEducativoId['niv_edu_id']
+                  'ActividadUsuario.niv_edu_id' => $idNivelEducativoId['niv_edu_id'],
+                  'Actividad.actividad_estado' => ESTADO_ACTIVO
                 ])
                 ->toArray();
   }
@@ -86,7 +87,7 @@ class ActividadTable extends AppTable{
   public function guardar($datos,$usuarioId){
     $actividad = $this->newEntity();
     $archivo = [];
-
+    $datos['actividad_estado'] = ESTADO_ACTIVO;
     if (isset($datos['actividad_id']) && !empty($datos['actividad_id'])) {
       $actividad = $this->get($datos['actividad_id']);
     }
@@ -97,13 +98,18 @@ class ActividadTable extends AppTable{
     }else{
       unset($datos['actividad_nombre_archivo']);
     }
+    if (isset($datos['fecha']) && !empty($datos['fecha'])) {
+       $datos['fecha'] = $this->getDateFormated($datos['fecha']);
+    }
+    $idNivelEducativoId = $datos['niv_edu_id'];
+    unset($datos['niv_edu_id']);
     $actividad = $this->patchEntity($actividad, $datos);
     $response['estatus'] = $this->connection()->transactional(
-      function() use ($actividad, $usuarioId,$archivo) {
+      function() use ($actividad, $usuarioId,$archivo,$idNivelEducativoId) {
           if (!$this->save($actividad)) {
               return false;
           }
-          $this->ActividadUsuario->guardar($actividad->actividad_id, $usuarioId, 1);
+          $this->ActividadUsuario->guardar($actividad->actividad_id, $usuarioId, $idNivelEducativoId);
           if ($archivo['size'] > SIN_ARCHIVO) {
             $this->__guardarArchivo($archivo,$usuarioId,$actividad->actividad_id);
           }

@@ -75,8 +75,12 @@
     margin-left: 10px;
 }
 
-.btn-right{
+.btn-right, .paginator-right{
     float: right;
+}
+
+.btn-left, .paginator-left{
+    float: left;
 }
 
 .no-resizable{
@@ -87,4 +91,8 @@
     border: 1px dotted #BDBDBD;
     background-color: #FAFAFA;
     padding: 5px;
+}
+
+.datapicker-read-only{
+    background: #FFFFFF !important;
 }
